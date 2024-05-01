@@ -1,0 +1,30 @@
+name: Setup and Check Versions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  setup-and-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install jq
+      run: sudo apt-get update && sudo apt-get install -y jq
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+      with:
+        terraform_version: '1.8.1'
+
+    - name: Check jq version
+      run: jq --version
+
+    - name: Check Terraform version
+      run: terraform version
+
